@@ -46,7 +46,7 @@ export default function Header() {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="/" className="text-white hover:text-[#b681f8] transition-colors">
+                                        <Link href="/pages/user/logout" className="text-white hover:text-[#b681f8] transition-colors">
                                             Sair
                                         </Link>
                                     </li>
