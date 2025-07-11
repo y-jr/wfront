@@ -41,6 +41,11 @@ export default function Header() {
                                         </Link>
                                     </li>
                                     <li>
+                                        <Link href="/pages/sale/create" className="text-white hover:text-[#b681f8] transition-colors">
+                                            Novo vendedor
+                                        </Link>
+                                    </li>
+                                    <li>
                                         <Link href="/pages/store/employee/create" className="text-white hover:text-[#b681f8] transition-colors">
                                             Novo empregado
                                         </Link>
