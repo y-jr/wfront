@@ -6,9 +6,9 @@ import Link from "next/link";
 import { login } from "@/lib/api/user";
 
 export default function LoginForm() {
-  
   const router = useRouter();
-  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   if (token) {
     router.push("/");
@@ -44,21 +44,30 @@ export default function LoginForm() {
   };
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault(); 
+    e.preventDefault();
     setErrors({ ...errors, form: "" });
 
     if (!validateForm()) {
-      setErrors((prev) => ({ ...prev, form: "Por favor, corrija os erros no formulário" }));
+      setErrors((prev) => ({
+        ...prev,
+        form: "Por favor, corrija os erros no formulário",
+      }));
       return;
     }
 
     setIsLoading(true);
     try {
       const { token } = await login(email, password);
-      localStorage.setItem("token", token);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("token", token);
+      }
+
       router.push("/");
     } catch (err: any) {
-      setErrors((prev) => ({ ...prev, form: err.message || "Erro durante o login" }));
+      setErrors((prev) => ({
+        ...prev,
+        form: err.message || "Erro durante o login",
+      }));
       console.error("Erro no login:", err);
     } finally {
       setIsLoading(false);
@@ -79,7 +88,6 @@ export default function LoginForm() {
       {/* Formulário lado direito */}
       <div className="flex flex-col justify-center items-center w-full lg:w-1/2 p-8">
         <div className="w-full max-w-md bg-white rounded-2xl p-8 shadow-lg border border-gray-100 relative">
-
           {/* Imagem da Logo */}
           <div className="flex justify-center -mt-20 mb-6">
             <img
@@ -103,7 +111,10 @@ export default function LoginForm() {
           <form onSubmit={handleLogin} className="space-y-6">
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Email
               </label>
               <input
@@ -115,12 +126,17 @@ export default function LoginForm() {
                 required
                 className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-[#720cf2] focus:border-[#720cf2]"
               />
-              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+              )}
             </div>
 
             {/* Senha */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Senha
               </label>
               <input
@@ -133,7 +149,9 @@ export default function LoginForm() {
                 autoComplete="current-password"
                 className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-[#720cf2] focus:border-[#720cf2]"
               />
-              {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+              )}
             </div>
 
             {/* Lembrar de mim */}

@@ -1,18 +1,19 @@
-"use client"
-import { useRouter } from 'next/navigation';
+"use client";
+import { useRouter } from "next/navigation";
 
 import RegisterForm from "@/Components/RegisterForm";
-import RegisterSellerForm from '@/Components/RegisterSellerForm';
+import RegisterSellerForm from "@/Components/RegisterSellerForm";
 
 export default function LoginPage() {
- 
-   const router = useRouter();
-   const token = localStorage.getItem('token');
-   if (token) {
-     router.push('/');
-   }
+  const router = useRouter();
+  let token;
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
+  }
 
-  return (
-    <RegisterSellerForm/>
-  );
+  if (token) {
+    router.push("/");
+  }
+
+  return <RegisterSellerForm />;
 }

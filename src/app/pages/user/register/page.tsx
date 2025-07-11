@@ -1,6 +1,6 @@
-"use client"
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+"use client";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import RegisterForm from "@/Components/RegisterForm";
 
 export default function LoginPage() {
@@ -9,9 +9,13 @@ export default function LoginPage() {
 
   useEffect(() => {
     setIsClient(true);
-    const token = localStorage.getItem('token');
+    let token;
+    if (typeof window !== "undefined") {
+      token = localStorage.getItem("token");
+    }
+
     if (token) {
-      router.push('/');
+      router.push("/");
     }
   }, [router]);
 

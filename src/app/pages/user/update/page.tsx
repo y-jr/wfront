@@ -1,17 +1,18 @@
-"use client"
-import { useRouter } from 'next/navigation';
+"use client";
+import { useRouter } from "next/navigation";
 
-import UpdateForm from '@/Components/UpdateForm';
+import UpdateForm from "@/Components/UpdateForm";
 
 export default function LoginPage() {
- 
-   const router = useRouter();
-   const token = localStorage.getItem('token');
-   if (token) {
-     router.push('/');
-   }
+  const router = useRouter();
+  let token;
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
+  }
 
-  return (
-    <UpdateForm/>
-  );
+  if (token) {
+    router.push("/");
+  }
+
+  return <UpdateForm />;
 }

@@ -1,19 +1,19 @@
 "use client";
 
-import { registerBuyer } from '@/lib/api/user';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { registerBuyer } from "@/lib/api/user";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function UpdateForm() {
   const router = useRouter();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({
-    name: '',
-    email: '',
-    password: '',
-    form: ''
+    name: "",
+    email: "",
+    password: "",
+    form: "",
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -21,36 +21,36 @@ export default function UpdateForm() {
   const validateForm = () => {
     let valid = true;
     const newErrors = {
-      name: '',
-      email: '',
-      password: '',
-      form: ''
+      name: "",
+      email: "",
+      password: "",
+      form: "",
     };
 
     // Validação do nome
     if (!name.trim()) {
-      newErrors.name = 'O nome é obrigatório';
+      newErrors.name = "O nome é obrigatório";
       valid = false;
     } else if (name.trim().length < 3) {
-      newErrors.name = 'O nome deve ter pelo menos 3 caracteres';
+      newErrors.name = "O nome deve ter pelo menos 3 caracteres";
       valid = false;
     }
 
     // Validação do email
     if (!email.trim()) {
-      newErrors.email = 'Email é obrigatório';
+      newErrors.email = "Email é obrigatório";
       valid = false;
     } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-      newErrors.email = 'Email inválido';
+      newErrors.email = "Email inválido";
       valid = false;
     }
 
     // Validação da senha
     if (!password) {
-      newErrors.password = 'Senha é obrigatória';
+      newErrors.password = "Senha é obrigatória";
       valid = false;
     } else if (password.length < 6) {
-      newErrors.password = 'Senha deve ter pelo menos 6 caracteres';
+      newErrors.password = "Senha deve ter pelo menos 6 caracteres";
       valid = false;
     }
 
@@ -60,7 +60,7 @@ export default function UpdateForm() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validação antes de submeter
     if (!validateForm()) {
       return;
@@ -69,10 +69,16 @@ export default function UpdateForm() {
     setIsLoading(true);
     try {
       const { token } = await registerBuyer(name, email, password);
-      localStorage.setItem('token', token);
-      router.push('/');
+      if (typeof window !== "undefined") {
+        localStorage.setItem("token", token);
+      }
+
+      router.push("/");
     } catch (err: any) {
-      setErrors(prev => ({ ...prev, form: err.message || 'Erro durante o registro' }));
+      setErrors((prev) => ({
+        ...prev,
+        form: err.message || "Erro durante o registro",
+      }));
     } finally {
       setIsLoading(false);
     }
@@ -91,7 +97,9 @@ export default function UpdateForm() {
 
       {/* Lado direito: Formulário */}
       <div className="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
-        <h1 className="text-2xl font-semibold mb-4">Atualizar informações do usuário</h1>
+        <h1 className="text-2xl font-semibold mb-4">
+          Atualizar informações do usuário
+        </h1>
 
         {/* Mensagem de erro geral */}
         {errors.form && (
@@ -110,13 +118,17 @@ export default function UpdateForm() {
               type="text"
               id="name"
               name="name"
-              className={`w-full border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-md py-2 px-3 focus:outline-none focus:border-blue-500`}
+              className={`w-full border ${
+                errors.name ? "border-red-500" : "border-gray-300"
+              } rounded-md py-2 px-3 focus:outline-none focus:border-blue-500`}
               autoComplete="off"
               value={name}
               onChange={(e) => setName(e.target.value)}
               onBlur={() => validateForm()}
             />
-            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+            )}
           </div>
 
           {/* Campo de email */}
@@ -128,13 +140,17 @@ export default function UpdateForm() {
               type="email"
               id="email"
               name="email"
-              className={`w-full border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md py-2 px-3 focus:outline-none focus:border-blue-500`}
+              className={`w-full border ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              } rounded-md py-2 px-3 focus:outline-none focus:border-blue-500`}
               autoComplete="off"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               onBlur={() => validateForm()}
             />
-            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            )}
           </div>
 
           {/* Campo de senha */}
@@ -146,13 +162,17 @@ export default function UpdateForm() {
               type="password"
               id="password"
               name="password"
-              className={`w-full border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-md py-2 px-3 focus:outline-none focus:border-blue-500`}
+              className={`w-full border ${
+                errors.password ? "border-red-500" : "border-gray-300"
+              } rounded-md py-2 px-3 focus:outline-none focus:border-blue-500`}
               autoComplete="off"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onBlur={() => validateForm()}
             />
-            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
           </div>
 
           {/* Botão de cadastro */}
@@ -161,7 +181,7 @@ export default function UpdateForm() {
             disabled={isLoading}
             className="bg-red-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full mb-4 disabled:opacity-50"
           >
-            {isLoading ? 'Atualizando...' : 'Atualizar'}
+            {isLoading ? "Atualizando..." : "Atualizar"}
           </button>
         </form>
       </div>

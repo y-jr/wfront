@@ -1,7 +1,7 @@
 // src/context/StoreContext.tsx
-'use client';
+"use client";
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode } from "react";
 
 interface Store {
   _id: string;
@@ -21,17 +21,21 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchStores = async (): Promise<Store[]> => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('/api/stores/my-stores', {
+      let token;
+      if (typeof window !== "undefined") {
+        token = localStorage.getItem("token");
+      }
+
+      const response = await fetch("/api/stores/my-stores", {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       const data = await response.json();
       setStores(data);
       return data;
     } catch (error) {
-      console.error('Error fetching stores:', error);
+      console.error("Error fetching stores:", error);
       return [];
     }
   };
@@ -46,7 +50,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
 export const useStore = () => {
   const context = useContext(StoreContext);
   if (!context) {
-    throw new Error('useStore must be used within a StoreProvider');
+    throw new Error("useStore must be used within a StoreProvider");
   }
   return context;
 };
