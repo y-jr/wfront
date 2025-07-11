@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const baseURL = "https://welwexpress-app.onrender.com/api/v1/welwexpress";
 
 const storeApi = axios.create({
   baseURL: `${baseURL}/stores`,

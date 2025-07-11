@@ -60,7 +60,9 @@ export default function RegisterForm() {
 
     try {
       const { token, user } = await registerBuyer(name, email, password);
-      localStorage.setItem("token", token);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("token", token);
+      }
 
       // Feedback visual antes do redirecionamento
       await new Promise((resolve) => setTimeout(resolve, 1000)); // 1s de delay
