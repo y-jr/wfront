@@ -175,7 +175,7 @@ export default function CreateStoreForm() {
                   disabled={isLoading}
                   className="bg-[#720cf2] hover:bg-[#5b09c2] text-white font-semibold py-2 px-6 rounded-md shadow-sm transition-colors disabled:opacity-50"
                 >
-                  {isLoading ? 'Cadastrando...' : 'Cadastrar Loja'}
+                  {isLoading ? 'Cadastrando...' : 'Cadastrar Vendedor'}
                 </button>
               </div>
             </form>
