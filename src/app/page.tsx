@@ -34,7 +34,8 @@ export default function Home({ }: HomeProps) {
   const handleUpdate = async () => {
     router.push('/pages/user/update');
   };
-
+  
+  router.push('/pages/home');
   return (
     <div className='text-center'>
       <h1>Página Inicial</h1>

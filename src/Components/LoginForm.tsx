@@ -6,7 +6,7 @@ import Link from "next/link";
 import { login } from "@/lib/api/user";
 
 export default function LoginForm() {
-
+  
   const router = useRouter();
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
@@ -44,26 +44,25 @@ export default function LoginForm() {
   };
 
   const handleLogin = async (e: React.FormEvent) => {
-    router.push('/pages/home');
-    // e.preventDefault(); 
-    // setErrors({ ...errors, form: "" });
+    e.preventDefault(); 
+    setErrors({ ...errors, form: "" });
 
-    // if (!validateForm()) {
-    //   setErrors((prev) => ({ ...prev, form: "Por favor, corrija os erros no formulário" }));
-    //   return;
-    // }
+    if (!validateForm()) {
+      setErrors((prev) => ({ ...prev, form: "Por favor, corrija os erros no formulário" }));
+      return;
+    }
 
-    // setIsLoading(true);
-    // try {
-    //   const { token } = await login(email, password);
-    //   localStorage.setItem("token", token);
-    //   router.push("/");
-    // } catch (err: any) {
-    //   setErrors((prev) => ({ ...prev, form: err.message || "Erro durante o login" }));
-    //   console.error("Erro no login:", err);
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    setIsLoading(true);
+    try {
+      const { token } = await login(email, password);
+      localStorage.setItem("token", token);
+      router.push("/");
+    } catch (err: any) {
+      setErrors((prev) => ({ ...prev, form: err.message || "Erro durante o login" }));
+      console.error("Erro no login:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
